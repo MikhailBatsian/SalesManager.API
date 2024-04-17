@@ -3,4 +3,7 @@
 
 @SalesManager.API_HostAddress ={{host}}:{{port}}
 
+GET {{SalesManager.API_HostAddress}}/api/sales/amounts
+
+Accept: application/json
 ###
