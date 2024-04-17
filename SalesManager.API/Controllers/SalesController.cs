@@ -27,9 +27,9 @@ public class SalesController : ControllerBase
 
     [HttpGet]
     [Route("datacount")]
-    public int GetSalesDataCount([FromQuery] SalesDataFilter filter)
+    public int GetSalesDataTotalCount([FromQuery] SalesDataFilter filter)
     {
-        var result = _saleService.GetSalesDataCount(filter);
+        var result = _saleService.GetSalesDataTotalCount(filter);
 
         return result;
     }

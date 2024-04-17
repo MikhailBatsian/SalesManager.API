@@ -6,6 +6,6 @@ namespace SalesManager.Domain.Interfaces.Repositories;
 
 public interface ISalesAmountRepository : IRepository<SalesData>
 {
-    int GetSalesDataCount(SalesDataFilter filter);
+    int GetSalesDataTotalCount(SalesDataFilter filter);
     IList<SalesDataDto> GetSalesData(SalesDataFilter filter);
 }

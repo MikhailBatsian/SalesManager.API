@@ -16,9 +16,9 @@ public class SalesAmountAmountRepository : EfRepository<SalesData>, ISalesAmount
         _salesManagerDbContext = salesManagerDbContext;
     }
 
-    public int GetSalesDataCount(SalesDataFilter filter)
+    public int GetSalesDataTotalCount(SalesDataFilter filter)
     {
-        var result = GetSalesDataQuery(filter).Count();
+        var result = GetSalesDataQuery(filter, usePaging:false).Count();
 
         return result;
     }
@@ -37,22 +37,26 @@ public class SalesAmountAmountRepository : EfRepository<SalesData>, ISalesAmount
         return result;
     }
 
-    private IQueryable<SalesData> GetSalesDataQuery(SalesDataFilter filter)
+    private IQueryable<SalesData> GetSalesDataQuery(SalesDataFilter filter, bool usePaging = true)
     {
-        //DATEPART doesn't work with parameterisation, so use FromSqlRaw instead of FromSql
-        return _salesManagerDbContext.SalesAmount
-                .FromSqlRaw(@$"
+        var sqlFunction = @$"
                     SELECT 
-                        DATEPART(year, [Date]) AS Year,
-                        DATEPART({filter.TimeInterval.ToString().ToLower()}, [Date]) AS PeriodNumber,
-                        SUM([Amount]) AS TotalAmount,
-                        Count([Amount]) As Count
-                    FROM [Sales]
-                    WHERE [Date] BETWEEN '{filter.StartDate:yyyy-MM-dd HH:mm:ss.fff}' AND '{filter.EndDate:yyyy-MM-dd HH:mm:ss.fff}'
+                        DATEPART(year, Date) AS Year,
+                        DATEPART({filter.TimeInterval.ToString().ToLower()}, Date) AS PeriodNumber,
+                        SUM(Amount) AS TotalAmount,
+                        Count(Amount) As Count
+                    FROM Sales
+                    WHERE Date BETWEEN '{filter.StartDate.ToString(Constants.DateTimeFormat)}' AND '{filter.EndDate.ToString(Constants.DateTimeFormat)}'
                     GROUP BY 
-                        DATEPART(year, [Date]),
-                        DATEPART({filter.TimeInterval.ToString().ToLower()}, [Date])
-                    ORDER BY Year, PeriodNumber
-                    OFFSET {filter.Skip} ROWS FETCH NEXT {filter.Take} ROWS ONLY");
+                        DATEPART(year, Date),
+                        DATEPART({filter.TimeInterval.ToString().ToLower()}, Date)";
+
+        if (usePaging)
+        {
+            sqlFunction = string.Concat(sqlFunction, $"ORDER BY Year, PeriodNumber OFFSET {filter.Skip} ROWS FETCH NEXT {filter.Take} ROWS ONLY");
+        }
+
+        //DATEPART doesn't work with parameterisation, so use FromSqlRaw instead of FromSql
+        return _salesManagerDbContext.SalesAmount.FromSqlRaw(sqlFunction);
     }
 }

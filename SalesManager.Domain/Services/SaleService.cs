@@ -14,9 +14,9 @@ public class SaleService : ISaleService
         _salesAmountRepository = salesAmountRepository;
     }
 
-    public int GetSalesDataCount(SalesDataFilter filter)
+    public int GetSalesDataTotalCount(SalesDataFilter filter)
     {
-        return _salesAmountRepository.GetSalesDataCount(filter);
+        return _salesAmountRepository.GetSalesDataTotalCount(filter);
     }
 
     public IList<SalesDataDto> GetSalesAmounts(SalesDataFilter filter)

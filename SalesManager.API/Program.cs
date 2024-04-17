@@ -1,12 +1,10 @@
 using Microsoft.EntityFrameworkCore;
+using SalesManager.API;
 using SalesManager.API.Infrastructure.Installers.Builder;
+using SalesManager.API.Infrastructure.Middleware;
 using SalesManager.Persistence;
 
-const string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
-
 var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
 
 builder.AddRepositories();
 builder.AddServices();
@@ -20,20 +18,20 @@ builder.Services.AddDbContext<SalesManagerDbContext>(c =>
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy(name: MyAllowSpecificOrigins,
+    options.AddPolicy(name: Constants.MyAllowSpecificOrigins,
         policy =>
         {
-            policy.WithOrigins("http://localhost:4200");
+            policy.WithOrigins(Constants.WebAppHost);
         });
 });
 
 var app = builder.Build();
 
-app.UseCors(MyAllowSpecificOrigins);
+app.UseMiddleware<ExceptionMiddleware>();
+app.UseCors(Constants.MyAllowSpecificOrigins);
 app.UseHttpsRedirection();
-app.UseAuthorization();
 app.MapControllers();
 
-app.MapGet("/", () => "Sales manager API works");
+app.MapGet("/", () => Constants.AppStartText);
 
 app.Run();
