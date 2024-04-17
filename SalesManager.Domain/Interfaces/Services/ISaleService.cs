@@ -5,5 +5,6 @@ namespace SalesManager.Domain.Interfaces.Services;
 
 public interface ISaleService
 {
-    IList<SalesAmountDto> GetSalesAmounts(SalesAmountFilter filter);
+    int GetSalesDataCount(SalesDataFilter filter);
+    IList<SalesDataDto> GetSalesAmounts(SalesDataFilter filter);
 }

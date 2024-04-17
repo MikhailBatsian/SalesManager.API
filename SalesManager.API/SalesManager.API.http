@@ -3,7 +3,12 @@
 
 @SalesManager.API_HostAddress ={{host}}:{{port}}
 
-GET {{SalesManager.API_HostAddress}}/api/sales/amounts
+GET {{SalesManager.API_HostAddress}}/api/sales/data?startDate=2020-01-01&endDate=2021-01-01&timeInterval=week&skip=0&take=15
+
+Accept: application/json
+###
+
+GET {{SalesManager.API_HostAddress}}/api/sales/datacount?startDate=2020-01-01&endDate=2021-01-01&timeInterval=week
 
 Accept: application/json
 ###

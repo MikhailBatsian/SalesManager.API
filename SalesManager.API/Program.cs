@@ -34,4 +34,6 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
 
+app.MapGet("/", () => "Sales manager API works");
+
 app.Run();

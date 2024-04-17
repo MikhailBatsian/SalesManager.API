@@ -4,9 +4,9 @@ using SalesManager.Domain.Entities;
 
 namespace SalesManager.Persistence.Configurations;
 
-internal class SalesAmountConfiguration : IEntityTypeConfiguration<SalesAmount>
+internal class SalesAmountConfiguration : IEntityTypeConfiguration<SalesData>
 {
-    public void Configure(EntityTypeBuilder<SalesAmount> builder)
+    public void Configure(EntityTypeBuilder<SalesData> builder)
     {
         builder.HasNoKey();
     }

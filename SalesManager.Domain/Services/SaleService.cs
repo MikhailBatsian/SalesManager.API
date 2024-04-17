@@ -4,6 +4,7 @@ using SalesManager.Domain.Interfaces.Repositories;
 using SalesManager.Domain.Interfaces.Services;
 
 namespace SalesManager.Domain.Services;
+
 public class SaleService : ISaleService
 {
     private readonly ISalesAmountRepository _salesAmountRepository;
@@ -13,8 +14,13 @@ public class SaleService : ISaleService
         _salesAmountRepository = salesAmountRepository;
     }
 
-    public IList<SalesAmountDto> GetSalesAmounts(SalesAmountFilter filter)
+    public int GetSalesDataCount(SalesDataFilter filter)
     {
-        return _salesAmountRepository.GetSalesAmounts(filter);
+        return _salesAmountRepository.GetSalesDataCount(filter);
+    }
+
+    public IList<SalesDataDto> GetSalesAmounts(SalesDataFilter filter)
+    {
+        return _salesAmountRepository.GetSalesData(filter);
     }
 }

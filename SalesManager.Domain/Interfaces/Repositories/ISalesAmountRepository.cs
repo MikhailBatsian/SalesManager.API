@@ -4,7 +4,8 @@ using SalesManager.Domain.Filters;
 
 namespace SalesManager.Domain.Interfaces.Repositories;
 
-public interface ISalesAmountRepository : IRepository<SalesAmount>
+public interface ISalesAmountRepository : IRepository<SalesData>
 {
-    IList<SalesAmountDto> GetSalesAmounts(SalesAmountFilter filter);
+    int GetSalesDataCount(SalesDataFilter filter);
+    IList<SalesDataDto> GetSalesData(SalesDataFilter filter);
 }

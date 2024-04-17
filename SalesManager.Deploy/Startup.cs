@@ -21,8 +21,4 @@ public class Startup
 
         services.AddScoped<DataSeedService>();
     }
-
-    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-    {
-    }
 }

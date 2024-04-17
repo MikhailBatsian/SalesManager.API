@@ -4,6 +4,7 @@ using SalesManager.Domain.Filters;
 using SalesManager.Domain.Interfaces.Services;
 
 namespace SalesManager.API.Controllers;
+
 [Route("api/sales")]
 [ApiController]
 public class SalesController : ControllerBase
@@ -16,10 +17,19 @@ public class SalesController : ControllerBase
     }
 
     [HttpGet]
-    [Route("amounts")]
-    public IEnumerable<SalesAmountDto> Get([FromQuery]SalesAmountFilter filter)
+    [Route("data")]
+    public IEnumerable<SalesDataDto> GetSalesData([FromQuery]SalesDataFilter filter)
     {
         var result = _saleService.GetSalesAmounts(filter);
+
+        return result;
+    }
+
+    [HttpGet]
+    [Route("datacount")]
+    public int GetSalesDataCount([FromQuery] SalesDataFilter filter)
+    {
+        var result = _saleService.GetSalesDataCount(filter);
 
         return result;
     }

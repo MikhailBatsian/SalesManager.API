@@ -11,7 +11,7 @@ public class SalesManagerDbContext : DbContext
 
     public DbSet<Sale> Sales { get; set; }
 
-    public DbSet<SalesAmount> SalesAmount { get; set; }
+    public DbSet<SalesData> SalesAmount { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
