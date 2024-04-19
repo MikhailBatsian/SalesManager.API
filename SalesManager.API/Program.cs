@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using SalesManager.API;
+using SalesManager.API.Infrastructure.Extensions;
 using SalesManager.API.Infrastructure.Installers.Builder;
-using SalesManager.API.Infrastructure.Middleware;
 using SalesManager.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,19 +16,10 @@ builder.Services.AddDbContext<SalesManagerDbContext>(c =>
     c.UseSqlServer(connectionString, sqlOptions => sqlOptions.EnableRetryOnFailure());
 });
 
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy(name: Constants.MyAllowSpecificOrigins,
-        policy =>
-        {
-            policy.WithOrigins(Constants.WebAppHost);
-        });
-});
-
 var app = builder.Build();
 
-app.UseMiddleware<ExceptionMiddleware>();
-app.UseCors(Constants.MyAllowSpecificOrigins);
+app.UseExceptionHandler();
+app.UseCorsPolicy();
 app.UseHttpsRedirection();
 app.MapControllers();
 
