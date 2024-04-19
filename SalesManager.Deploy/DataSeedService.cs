@@ -32,13 +32,18 @@ public class DataSeedService
         for (var i = 0; i < 1000; i++)
         {
             saleDate = saleDate.AddDays(1);
-            var sale = new Sale
+            var salesCount = random.Next(1, 20);
+            for (int j = 0; j < salesCount; j++)
             {
-                Amount = random.Next(100, 1001),
-                Date = saleDate
-            };
+                var sale = new Sale
+                {
+                    Amount = random.Next(100, 1001),
+                    Date = saleDate
+                };
 
-            context.Add(sale);
+                context.Add(sale);
+            }
+
         }
             
         await context.SaveChangesAsync();

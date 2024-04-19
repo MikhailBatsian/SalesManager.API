@@ -40,6 +40,25 @@ namespace SalesManager.Persistence.Migrations
 
                     b.ToTable("Sales");
                 });
+
+            modelBuilder.Entity("SalesManager.Domain.Entities.SalesData", b =>
+                {
+                    b.Property<int>("Count")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PeriodNumber")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("TotalAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("Year")
+                        .HasColumnType("int");
+
+                    b.ToTable((string)null);
+
+                    b.ToView(null, (string)null);
+                });
 #pragma warning restore 612, 618
         }
     }

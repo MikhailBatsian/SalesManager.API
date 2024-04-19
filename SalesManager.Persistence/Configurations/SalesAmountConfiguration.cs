@@ -8,6 +8,9 @@ internal class SalesAmountConfiguration : IEntityTypeConfiguration<SalesData>
 {
     public void Configure(EntityTypeBuilder<SalesData> builder)
     {
-        builder.HasNoKey();
+        builder.HasNoKey().ToView(null);
+
+        builder.Property(x => x.TotalAmount)
+            .HasColumnType("decimal(18,2)");
     }
 }

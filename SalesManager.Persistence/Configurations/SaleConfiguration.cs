@@ -8,7 +8,7 @@ internal class SaleConfiguration : IEntityTypeConfiguration<Sale>
 {
     public void Configure(EntityTypeBuilder<Sale> builder)
     {
-        builder.Property(oi => oi.Amount)
+        builder.Property(x => x.Amount)
             .IsRequired(true)
             .HasColumnType("decimal(18,2)");
     }
